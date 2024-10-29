@@ -48,7 +48,7 @@ const subtitles = [
         { transform: `translateX(calc(100vw + ${subtitleWidth}px))`, opacity: 0 }, 
       ],
       {
-        duration: 5000,
+        duration: 2000,
         easing: "ease-in-out",
         iterations: 1,
         fill: "forwards",
@@ -58,7 +58,7 @@ const subtitles = [
 
     setTimeout(() => {
       subtitleContainer.remove();
-    }, 2000);
+    }, 5000);
   }
   
 
