@@ -1,69 +1,288 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nugget</title>
+   
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <script src="subtitle.js"></script>
+    <script src="./uv/uv.bundle.js"></script>
+    <script src="./uv/uv.config.js"></script>
+    <script src="./assets/register-sw.js"></script>
+    <style>
+     
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Arial", sans-serif;
+      }
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="./assets/ultraviolet.png" type="image/png">
-  <title>Ultraviolet</title>
+      body {
+        background: linear-gradient(145deg, #121212, #070707);
+        color: #f0f0f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        flex-direction: column;
+        position: relative;
+        overflow: hidden;
+      }
 
-  <!-- Meta tags for SEO -->
-  <meta property="og:title" content="Ultraviolet">
-  <meta property="og:description"
-    content="Ultraviolet is a web proxy for unblocking websites using service workers and interception." />
-  <meta property="og:image" content="/assets/ultraviolet.png" />
-  <meta name="theme-color" content="#262262" />
+      .backdrop-box {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 500px;
+        height: 230px;
+        background: rgba(70, 70, 70, 0.8);
+        border-radius: 30px;
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5),
+          inset 0px 0px 10px rgba(255, 255, 255, 0.1);
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        text-align: center;
+      }
 
-  <!-- Styles and fonts -->
-  <link rel="stylesheet" href="./assets/style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
-    rel="stylesheet">
+      h1 {
+        font-size: 3em;
+        color: #00d4ff;
+        margin-bottom: 20px;
+        text-shadow: 3px 3px 12px rgba(0, 0, 0, 0.8);
+        transition: color 0.3s ease;
+      }
 
-  <!-- Scripts -->
-  <script src="./uv/uv.bundle.js"></script>
-  <script src="./uv/uv.config.js"></script>
-  <script src="./assets/register-sw.js"></script>
+      h1:hover {
+        color: #ff8800;
+      }
 
-</head>
+      input#search {
+        width: 100%;
+        max-width: 450px;
+        padding: 15px;
+        background: #1a1a1a;
+        border: none;
+        border-radius: 50px;
+        font-size: 1.2em;
+        color: #fff;
+        outline: none;
+        transition: all 0.3s ease;
+        box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.6);
+      }
 
-<body>
-  <div class="container">
-    <h1 class="header">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
-        <path d="M20 22h-2" />
-        <path d="M20 15v2h-2" />
-        <path d="M4 19.5V15" />
-        <path d="M20 8v3" />
-        <path d="M18 2h2v2" />
-        <path d="M4 11V9" />
-        <path d="M12 2h2" />
-        <path d="M12 22h2" />
-        <path d="M12 17h2" />
-        <path d="M8 22H6.5a2.5 2.5 0 0 1 0-5H8" />
-        <path d="M4 5v-.5A2.5 2.5 0 0 1 6.5 2H8" />
-      </svg>
-      Ultraviolet Template
-    </h1>
-    <p class="description">A template for creating your own Ultraviolet proxy</p>
-    <input type="text" class="input" placeholder="Enter a search query or URL">
-  </div>
+      input#search::placeholder {
+        color: #aaa;
+        font-style: italic;
+      }
 
-  <div class="footer">
-    <div>
-      <img src="./assets/ultraviolet.png" class="logo">
+      input#search:hover,
+      input#search:focus {
+        box-shadow: 0px 0px 20px rgba(0, 212, 255, 0.8);
+        transform: scale(1.05);
+      }
+
+      #particles-js {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+      }
+
+      .subtitle {
+        position: absolute;
+        top: 20px;
+        left: 0;
+        font-size: 1.5em;
+        color: #00d4ff;
+        text-shadow: 2px 2px 12px rgba(0, 0, 0, 0.8);
+        white-space: nowrap;
+      }
+
+      .social-buttons {
+        position: absolute;
+        bottom: 30px;
+        right: 30px;
+        display: flex;
+        gap: 15px;
+        z-index: 2;
+      }
+
+      .social-button {
+        background-color: rgba(0, 212, 255, 0.8);
+        border: none;
+        border-radius: 50px;
+        padding: 10px 15px;
+        font-size: 1.2em;
+        color: white;
+        cursor: pointer;
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .social-button:hover {
+        transform: scale(1.1);
+        box-shadow: 0px 8px 20px rgba(0, 212, 255, 0.6);
+      }
+
+      .social-button:active {
+        transform: scale(1);
+        box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.5);
+      }
+
+      .github {
+        background-color: #333;
+      }
+
+      .discord {
+        background-color: #7289da;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="particles-js"></div>
+
+    <div class="backdrop-box">
+      <h1>Nugget</h1>
+      <input type="text" class="input" id="search" placeholder="Enter URL..." />
     </div>
 
-    <div>
-      <a href="https://github.com/proudparrot2/ultraviolet" target="_blank">GitHub</a>
-      <a href="https://github.com/titaniumnetwork-dev/ultraviolet" target="_blank">Ultraviolet</a>
+    <div class="social-buttons">
+      <a href="https://github.com/xdevman9/Nugget-search" target="_blank">
+        <button class="social-button github">GitHub</button>
+      </a>
+      <a href="https://discord.gg/2rEh5cmT6p" target="_blank">
+        <button class="social-button discord">Discord</button>
+      </a>
     </div>
-  </div>
+    <script src="./assets/script.js" defer></script>
 
-  <script src="./assets/script.js" defer></script>
-</body>
+    <script>
 
+      window.addEventListener("keydown", function (e) {
+        if (e.key.toLowerCase() === "p") {
+          window.close(); 
+        }
+      });
+
+      particlesJS("particles-js", {
+        particles: {
+          number: {
+            value: 120,
+            density: {
+              enable: true,
+              value_area: 1000,
+            },
+          },
+          color: {
+            value: "#00d4ff",
+          },
+          shape: {
+            type: "circle",
+            stroke: {
+              width: 0,
+              color: "#000000",
+            },
+            polygon: {
+              nb_sides: 5,
+            },
+          },
+          opacity: {
+            value: 0.5,
+            random: false,
+            anim: {
+              enable: false,
+              speed: 1,
+              opacity_min: 0.1,
+              sync: false,
+            },
+          },
+          size: {
+            value: 5,
+            random: true,
+            anim: {
+              enable: false,
+              speed: 40,
+              size_min: 0.1,
+              sync: false,
+            },
+          },
+          line_linked: {
+            enable: true,
+            distance: 150,
+            color: "#00d4ff",
+            opacity: 0.4,
+            width: 1,
+          },
+          move: {
+            enable: true,
+            speed: 6,
+            direction: "none",
+            random: false,
+            straight: false,
+            out_mode: "out",
+            bounce: false,
+            attract: {
+              enable: false,
+              rotateX: 600,
+              rotateY: 1200,
+            },
+          },
+        },
+        interactivity: {
+          detect_on: "canvas",
+          events: {
+            onhover: {
+              enable: true,
+              mode: "repulse",
+            },
+            onclick: {
+              enable: true,
+              mode: "push",
+            },
+            resize: true,
+          },
+          modes: {
+            grab: {
+              distance: 400,
+              line_linked: {
+                opacity: 1,
+              },
+            },
+            bubble: {
+              distance: 400,
+              size: 40,
+              duration: 2,
+              opacity: 8,
+              speed: 3,
+            },
+            repulse: {
+              distance: 200,
+              duration: 0.4,
+            },
+            push: {
+              particles_nb: 4,
+            },
+            remove: {
+              particles_nb: 2,
+            },
+          },
+        },
+        retina_detect: true,
+      });
+
+    </script>
+  </body>
 </html>
