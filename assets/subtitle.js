@@ -58,7 +58,7 @@ const subtitles = [
 
     setTimeout(() => {
       subtitleContainer.remove();
-    }, 5000);
+    }, 2000);
   }
   
 
