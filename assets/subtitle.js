@@ -48,7 +48,7 @@ const subtitles = [
         { transform: `translateX(calc(100vw + ${subtitleWidth}px))`, opacity: 0 }, 
       ],
       {
-        duration: 2000,
+        duration: 7000,
         easing: "ease-in-out",
         iterations: 1,
         fill: "forwards",
