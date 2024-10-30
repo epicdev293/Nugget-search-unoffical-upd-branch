@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nugget</title>
     
+    <!-- Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
     <script type='text/javascript' src='//pl24861285.profitablecpmrate.com/33/4c/30/334c30f879489aeeab667dcaac68e311.js'></script> <!-- Direct ads -->
     <script src="assets/subtitle.js"></script>
@@ -29,6 +35,35 @@
         flex-direction: column;
         position: relative;
         overflow: hidden;
+      }
+
+      .settings-container {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        background-color: rgba(0, 212, 255, 0.8);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+        z-index: 2;
+      }
+
+      .settings-button {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5em;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .settings-button:hover {
+        color: #ff8800;
+        transform: rotate(90deg);
       }
 
       .backdrop-box {
@@ -121,6 +156,13 @@
   <body>
     <div id="particles-js"></div>
 
+    <!-- Settings Container -->
+    <div class="settings-container">
+      <button class="settings-button">
+        <i class="fas fa-cog"></i>
+      </button>
+    </div>
+
     <div class="backdrop-box">
       <h1>Nugget</h1>
       <input type="text" class="input" id="search" placeholder="Enter URL..." />
@@ -144,6 +186,9 @@
     <script type='text/javascript' src='//pl24861285.profitablecpmrate.com/33/4c/30/334c30f879489aeeab667dcaac68e311.js'></script> <!--Ads if you don't like it, go cry about it!-->
 
     <script>
+      document.querySelector('.settings-button').addEventListener('click', function() {
+  alert("Coming soon...");
+});
       document.addEventListener("DOMContentLoaded", function () {
         particlesJS("particles-js", {
           particles: {
