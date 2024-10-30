@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nugget</title>
     
-    <!-- Font Awesome for icons -->
+    
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
@@ -151,6 +151,123 @@
         transform: scale(1.1);
         box-shadow: 0px 8px 20px rgba(0, 212, 255, 0.6);
       }
+
+        
+  .popup-container {
+    display: none; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); 
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+  }
+
+ 
+  .popup-content {
+    background-color: #121212; 
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    color: #f0f0f0;
+  }
+
+ 
+  .close-button {
+    font-size: 1.5em;
+    color: #fff;
+    float: right;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+
+  .close-button:hover {
+    color: #ff8800;
+  }
+      
+      /* Custom Settings Inputs and Button Styles */
+.popup-content label {
+  display: block;
+  color: #00d4ff;
+  font-weight: bold;
+  margin-top: 15px;
+  font-size: 1.1em;
+}
+
+.popup-content input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  border-radius: 5px;
+  border: none;
+  background-color: #1a1a1a;
+  color: #fff;
+  font-size: 1em;
+  outline: none;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.popup-content input::placeholder {
+  color: #888;
+}
+
+.popup-content input:hover,
+.popup-content input:focus {
+  background-color: #2a2a2a;
+  box-shadow: 0px 0px 10px rgba(0, 212, 255, 0.8);
+  transform: scale(1.05);
+}
+
+#save-settings {
+  margin-top: 20px;
+  padding: 10px 15px;
+  font-size: 1.2em;
+  color: #f0f0f0;
+  background-color: #00d4ff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+#save-settings:hover {
+  background-color: #ff8800;
+  transform: scale(1.1);
+  box-shadow: 0px 10px 20px rgba(255, 136, 0, 0.6);
+}
+      .popup-content input[type="url"],
+.popup-content input[type="file"] {
+  margin-top: 8px;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 1em;
+  background-color: #1a1a1a;
+  color: #fff;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.popup-content input[type="file"] {
+  color: #888;
+  cursor: pointer;
+}
+
+.popup-content input[type="url"]:hover,
+.popup-content input[type="url"]:focus,
+.popup-content input[type="file"]:hover,
+.popup-content input[type="file"]:focus {
+  background-color: #2a2a2a;
+  box-shadow: 0px 0px 10px rgba(0, 212, 255, 0.8);
+  transform: scale(1.05);
+}
+
     </style>
   </head>
   <body>
@@ -182,13 +299,31 @@
       </a>
     </div>
 
+    <!--Settings page as a(pop up) instead of html page-->
+    <div id="settings-popup" class="popup-container">
+  <div class="popup-content">
+    <span class="close-button">&times;</span>
+    <h2>Settings</h2>
+    <p>Customize your experience:</p>
+    <label for="site-name">Custom Site Name:</label>
+<input type="text" id="site-name" placeholder="Enter your custom site name..." />
+
+<!-- Icon Image URL Field -->
+<label for="icon-url">Icon Image URL:</label>
+<input type="url" id="icon-url" placeholder="Enter image URL..." />
+
+<!-- Icon Image Upload Field -->
+<label for="icon-upload">Or Upload Icon:</label>
+<input type="file" id="icon-upload" accept="image/*" />
+
+<button id="save-settings">Save Settings</button>
+  </div>
+</div>
+
     <script src="./assets/script.js" defer></script>
     <script type='text/javascript' src='//pl24861285.profitablecpmrate.com/33/4c/30/334c30f879489aeeab667dcaac68e311.js'></script> <!--Ads if you don't like it, go cry about it!-->
 
     <script>
-      document.querySelector('.settings-button').addEventListener('click', function() {
-  alert("Coming soon...");
-});
       document.addEventListener("DOMContentLoaded", function () {
         particlesJS("particles-js", {
           particles: {
@@ -208,6 +343,49 @@
           retina_detect: true,
         });
       });
+
+       
+      // Event listener for opening the popup
+document.querySelector('.settings-button').addEventListener('click', function() {
+  document.getElementById('settings-popup').style.display = 'flex';
+});
+
+// Event listener for closing the popup
+document.querySelector('.close-button').addEventListener('click', function() {
+  document.getElementById('settings-popup').style.display = 'none';
+});
+      document.getElementById('save-settings').addEventListener('click', function () {
+  const siteName = document.getElementById('site-name').value;
+  const iconUrl = document.getElementById('icon-url').value;
+  const iconUpload = document.getElementById('icon-upload').files[0];
+
+  // Change site name based on input
+  if (siteName) {
+    document.title = siteName;
+    document.querySelector('h1').textContent = siteName;
+  }
+
+  // Handle custom icon - prioritize uploaded file over URL
+  const iconElement = document.querySelector('link[rel="icon"]') || document.createElement('link');
+  iconElement.rel = 'icon';
+
+  if (iconUpload) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      iconElement.href = e.target.result;
+      document.head.appendChild(iconElement);
+    };
+    reader.readAsDataURL(iconUpload);
+  } else if (iconUrl) {
+    iconElement.href = iconUrl;
+    document.head.appendChild(iconElement);
+  }
+
+  // Close the settings popup after saving
+  document.getElementById('settings-popup').style.display = 'none';
+});
+
+
     </script>
   </body>
 </html>
